@@ -1,0 +1,24 @@
+/* FileName: /tab2/tab2.page.scss */
+
+ion-card-content {
+    // Anda bisa menyesuaikan tinggi ini sesuai kebutuhan
+    // Misalnya, 300px atau 250px
+    height: 300px; // Memberikan tinggi tetap pada kontainer chart
+    display: flex; // Menggunakan flexbox untuk penempatan chart
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative; // Penting untuk posisi absolut canvas jika diperlukan
+  }
+  
+  canvas {
+    // Pastikan canvas mengisi ruang yang tersedia dalam ion-card-content
+    // dan tidak melebihi batasnya.
+    // Jika responsive: false, Anda bisa memberikan ukuran eksplisit di sini.
+    width: 100% !important; // Pastikan lebar 100% dari parent
+    height: 100% !important; // Pastikan tinggi 100% dari parent
+    max-width: 300px; // Batasi lebar maksimum chart
+    max-height: 300px; // Batasi tinggi maksimum chart
+    display: block; // Penting untuk canvas
+  }
+  

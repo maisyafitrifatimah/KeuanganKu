@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ekspor Excel</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label>TANGGAL MULAI</ion-label>
+    <ion-datetime display-format="MM/DD/YYYY" [(ngModel)]="startDate"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>TANGGAL AKHIR</ion-label>
+    <ion-datetime display-format="MM/DD/YYYY" [(ngModel)]="endDate"></ion-datetime>
+  </ion-item>
+
+  <ion-button expand="full" (click)="exportToExcel()">EKSPOR</ion-button>
+</ion-content>

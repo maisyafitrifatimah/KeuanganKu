@@ -1,0 +1,40 @@
+<ion-header> 
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Kategori</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="tab" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="Pendapatan">
+      <ion-label>Pendapatan</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Pengeluaran">
+      <ion-label>Pengeluaran</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list>
+    <ion-item *ngFor="let item of kategoriList">
+      <ion-icon [name]="getIconName(item.icon)" slot="start" color="primary"></ion-icon>
+      <ion-label>{{ item.nama }}</ion-label>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="editKategori(item)">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="hapusKategori(item.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="tambahKategori()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

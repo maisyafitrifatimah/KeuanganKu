@@ -1,17 +1,75 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+    <ion-title>Transaksi</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Navigasi Bulan -->
+  <div class="ion-text-center ion-margin-bottom">
+    <ion-button size="small" fill="outline" (click)="geserBulan(-1)">
+      &larr;
+    </ion-button>
+      <strong>{{ bulanIni | date: 'MMMM yyyy' }}</strong>
+    <ion-button size="small" fill="outline" (click)="geserBulan(1)">
+      &rarr;
+    </ion-button>
+  </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <!-- Ringkasan Bulanan -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ bulanIni | date: 'MMMM yyyy' }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label><h2>Pendapatan</h2></ion-label>
+        <ion-note color="success" slot="end">
+          {{ totalPendapatan | currency:'IDR' }}
+        </ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label><h2>Pengeluaran</h2></ion-label>
+        <ion-note color="danger" slot="end">
+          {{ totalPengeluaran | currency:'IDR' }}
+        </ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label><h2>Total</h2></ion-label>
+        <ion-note color="medium" slot="end">
+          {{ totalSaldo | currency:'IDR' }}
+        </ion-note>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Daftar Transaksi Per Hari -->
+  <div *ngFor="let group of transaksiPerTanggal">
+    <ion-text color="dark">
+      <h2 class="ion-padding-top">{{ group.tanggal | date:'EEEE, d MMMM yyyy' }}</h2>
+      <p class="ion-padding-start ion-padding-bottom" style="font-size: 0.9em;">
+        Pendapatan: 
+        <ion-text color="success">{{ group.totalPendapatan | currency:'IDR' }}</ion-text>
+        &nbsp;|&nbsp;
+        Pengeluaran: 
+        <ion-text color="danger">{{ group.totalPengeluaran | currency:'IDR' }}</ion-text>
+      </p>
+    </ion-text>
+
+    <ion-list>
+      <ion-item *ngFor="let t of group.transaksi">
+        <ion-avatar slot="start">
+          <!-- Menggunakan icon dari data transaksi jika ada, fallback ke getIcon -->
+          <ion-icon [name]="t.icon || getIcon(t.kategori)" style="font-size: 24px;"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ t.kategori }}</h2>
+          <p>{{ t.deskripsi }}</p>
+        </ion-label>
+        <ion-note slot="end" [color]="t.jenis === 'pendapatan' ? 'success' : 'danger'">
+          {{ t.nominal | currency:'IDR' }}
+        </ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

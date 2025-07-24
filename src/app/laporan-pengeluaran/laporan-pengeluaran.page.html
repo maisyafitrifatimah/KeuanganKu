@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab2"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Laporan Pengeluaran</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Judul Bulan -->
+  <div class="ion-text-center ion-margin-bottom">
+    <strong>{{ bulanIni | date: 'MMMM yyyy' }}</strong>
+  </div>
+
+  <!-- Grafik Doughnut -->
+  <ion-card *ngIf="chartPengeluaran.datasets[0].data.length > 0">
+    <ion-card-content>
+      <div style="position: relative; height: 300px; width: 100%;">
+        <canvas baseChart
+          [data]="chartPengeluaran"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+          [plugins]="chartPlugins">
+        </canvas>
+      </div>
+      <div class="ion-text-center ion-margin-top">
+        <h2>Total: {{ totalPengeluaran | currency:'IDR' }}</h2>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Daftar Kategori -->
+  <ion-list *ngIf="dataPengeluaran.length > 0">
+    <ion-item *ngFor="let item of dataPengeluaran">
+      <ion-icon name="card-outline" slot="start" color="danger"></ion-icon>
+      <ion-label>
+        <h2>{{ item.kategori }}</h2>
+        <p>{{ item.persen | number:'1.2-2' }}% • {{ item.transaksi }} transaksi</p>
+      </ion-label>
+      <ion-note slot="end" color="danger">{{ item.nominal | currency:'IDR' }}</ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-item *ngIf="dataPengeluaran.length === 0">
+    <ion-label class="ion-text-center">Tidak ada data pengeluaran</ion-label>
+  </ion-item>
+</ion-content>

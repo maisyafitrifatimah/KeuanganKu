@@ -1,0 +1,61 @@
+ion-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pin-dots {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    font-size: 2.5em;
+    gap: 10px;
+  }
+  
+  .pin-dots span {
+    color: #ccc;
+    transition: color 0.2s ease;
+  }
+  
+  .pin-dots span.filled {
+    color: #000;
+  }
+  
+  .pin-dots.shake {
+    animation: shake 0.4s;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+  }
+  
+  .keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .keypad-btn {
+    width: 80px;
+    height: 80px;
+    font-size: 1.8em;
+    border-radius: 50%;
+    background: #f4f4f4;
+    border: none;
+    transition: transform 0.1s ease-in-out;
+  }
+  
+  .keypad-btn:active {
+    transform: scale(0.9);
+  }
+  
+  .keypad-btn.action {
+    background: #e0e0e0;
+    font-size: 1.5em;
+  }
+  

@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tab4"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Rekening</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <!-- Total Rekening -->
+    <ion-item lines="full">
+      <ion-icon name="wallet-outline" slot="start" color="medium"></ion-icon>
+      <ion-label>
+        <h2>Total</h2>
+        <p>{{ getTotalRekening() | currency:'IDR' }}</p>
+      </ion-label>
+    </ion-item>
+
+    <!-- Daftar Rekening -->
+    <ion-item *ngFor="let r of daftarRekening" (click)="editRekening(r)">
+      <ion-icon [name]="r.icon || 'wallet-outline'" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <h2>{{ r.nama }}</h2>
+        <p>{{ r.saldo | currency:'IDR' }}</p>
+      </ion-label>
+      <ion-button fill="clear" slot="end" color="danger" (click)="hapusRekening(r.id)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+  </ion-list>
+
+  <!-- Tombol Tambah (+) -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="tampilkanFormTambah()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

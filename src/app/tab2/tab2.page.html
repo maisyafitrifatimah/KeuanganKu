@@ -1,17 +1,81 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title>Laporan Bulanan</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Navigasi Bulan -->
+  <div class="ion-text-center ion-margin-bottom">
+    <ion-button size="small" fill="outline" (click)="geserBulan(-1)">
+      &larr;
+    </ion-button>
+    <strong>{{ bulanIni | date: 'MMMM yyyy' }}</strong>
+    <ion-button size="small" fill="outline" (click)="geserBulan(1)">
+      &rarr;
+    </ion-button>
+  </div>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- Ringkasan Bulanan -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ bulanIni | date: 'MMMM yyyy' }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label><h2>Pendapatan</h2></ion-label>
+        <ion-note color="success" slot="end">
+          {{ totalPendapatan | currency:'IDR' }}
+        </ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label><h2>Pengeluaran</h2></ion-label>
+        <ion-note color="danger" slot="end">
+          {{ totalPengeluaran | currency:'IDR' }}
+        </ion-note>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label><h2>Total</h2></ion-label>
+        <ion-note color="medium" slot="end">
+          {{ totalSaldo | currency:'IDR' }}
+        </ion-note>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Grafik Pendapatan -->
+  <ion-card *ngIf="chartPendapatan.datasets[0].data.length > 0">
+    <ion-card-header><ion-card-title>Pendapatan</ion-card-title></ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+              [data]="chartPendapatan"
+              [type]="'doughnut'"
+              [options]="chartOptions">
+      </canvas>
+      <ion-button expand="full" (click)="navigateToDetail('pendapatan')">Lihat Detail</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="chartPendapatan.datasets[0].data.length === 0">
+    <ion-card-content class="ion-text-center">
+      <p>Tidak ada data pendapatan untuk bulan ini.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Grafik Pengeluaran -->
+  <ion-card *ngIf="chartPengeluaran.datasets[0].data.length > 0">
+    <ion-card-header><ion-card-title>Pengeluaran</ion-card-title></ion-card-header>
+    <ion-card-content>
+      <canvas baseChart
+              [data]="chartPengeluaran"
+              [type]="'doughnut'"
+              [options]="chartOptions">
+      </canvas>
+      <ion-button expand="full" (click)="navigateToDetail('pengeluaran')">Lihat Detail</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="chartPengeluaran.datasets[0].data.length === 0">
+    <ion-card-content class="ion-text-center">
+      <p>Tidak ada data pengeluaran untuk bulan ini.</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
